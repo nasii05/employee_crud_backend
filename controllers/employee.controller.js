@@ -3,7 +3,7 @@ const router = express.Router();
 const objectId = require('mongoose').Types.ObjectId;
 
 const Employee = require('../models/employee.model.js');
-
+const { generateCrudMetods } = require('../services/index.js');
 router.get('/', (req, res) => {
     Employee.find()
         .then(data => res.send(data))
