@@ -16,7 +16,7 @@ app.use(errorHandler)
 connectDb()
     .then(() => {
         console.log('db connection succeeded.')
-        app.listen(3000,
-            () => console.log('server started at 3000.'))
+        app.listen(4000,
+            () => console.log('server started at 4000.'))
     })
     .catch(err => console.log(err))
