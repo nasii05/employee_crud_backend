@@ -12,11 +12,11 @@ app.use(bodyParser.json())
 app.use('/api/employees', employeeRoutes)
 app.use(errorHandler)
 
-
+// the final versoin is updated
 connectDb()
     .then(() => {
         console.log('db connection succeeded.')
-        app.listen(4000,
+        app.listen(3000,
             () => console.log('server started at 4000.'))
     })
     .catch(err => console.log(err))
