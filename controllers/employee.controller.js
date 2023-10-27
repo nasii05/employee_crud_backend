@@ -6,6 +6,11 @@ const Employee = require('../models/employee.model.js');
 const { generateCrudMethods } = require('../services/index.js');
 const employeecrud = generateCrudMethods(Employee);
 
+router.get('/test',
+    (req, res, next) => {next()},
+    (req, res) => {res.send('foo')}
+)
+
 router.get('/', (req, res) => {
     employeecrud.getAll()
         .then(data => res.send(data))
@@ -36,6 +41,13 @@ router.post('/', (req, res) => {
         .catch(err => console.log(err));
 });
 
+router.put('/:id', (req, res) => {
+    
+})
+
+router.delete('/:id', (req, res) => {
+
+})
 
 
 module.exports = router;
