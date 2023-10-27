@@ -5,12 +5,15 @@ const bodyparser = require('body-parser');
 const connnectDb = require('./db.js');
 const employeeRoutes = require('./controllers/employee.controller.js');
 const staffRoutes = require('./controllers/staff.controller.js');
+const {errorHandler} = require('./middlewares/index.js');
 
 const app = express();
 
+// middlewares
 app.use(bodyparser.json())
 app.use('/api/employees', employeeRoutes);
 app.use('/api/staffs', staffRoutes);
+app.use(errorHandler)
 
 
 connnectDb()

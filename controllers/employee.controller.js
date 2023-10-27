@@ -7,15 +7,10 @@ const employeecrud = generateCrudMethods(Employee);
 const { validateDbId, raiseRecord404Error } = require('../middlewares/index.js');
 
 
-router.get('/test',
-    (req, res, next) => { next({}) },
-    (req, res) => { res.send('foo') }
-)
-
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
     employeecrud.getAll()
         .then(data => res.send(data))
-        .catch(err => console.log(err));
+        .catch(err => next(err));
 });
 
 router.get('/:id', validateDbId, (req, res) => {
