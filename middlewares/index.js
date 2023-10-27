@@ -6,4 +6,10 @@ const validateDbId = (req, res, next) => {
         res.status(400).json({
             error: 'given object id is not valid'
         })
+    else
+    next()
+}
+
+module.exports = {
+    validateDbId
 }

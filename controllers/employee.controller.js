@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {validateDbId}  = require('../middlewares/index.js');
 
 const Employee = require('../models/employee.model.js');
 const { generateCrudMethods } = require('../services/index.js');
@@ -16,12 +17,7 @@ router.get('/', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/:id', (req, res) => {
-    if (objectId.isValid(req.params.id) == false)
-        res.status(400).json({
-            error: 'no recode with given _id' + req.params.id
-        })
-    else
+router.get('/:id', validateDbId,  (req, res) => {
         employeecrud.getById(req.params.id)
             .then(data => {
                 if (data)
