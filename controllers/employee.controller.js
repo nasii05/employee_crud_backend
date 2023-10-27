@@ -13,28 +13,28 @@ router.get('/', (req, res, next) => {
         .catch(err => next(err));
 });
 
-router.get('/:id', validateDbId, (req, res) => {
+router.get('/:id', validateDbId, (req, res, next) => {
     employeecrud.getById(req.params.id)
         .then(data => {
             if (data)
                 res.send(data)
             else
-              raiseRecord404Error(req, res)
+                raiseRecord404Error(req, res)
         })
-        .catch(err => console.log(err));
+        .catch(err => next(err));
 });
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
     employeecrud.create(req.body)
         .then(data => res.status(201).json(data))
-        .catch(err => console.log(err));
+        .catch(err => next(err));
 });
 
 router.put('/:id', validateDbId, (req, res) => {
-
+    
 })
 
-router.delete('/:id', validateDbId,(req, res) => {
+router.delete('/:id', validateDbId, (req, res) => {
 
 })
 
