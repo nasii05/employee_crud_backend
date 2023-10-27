@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const objectId = require('mongoose').Types.ObjectId;
 
 const Employee = require('../models/employee.model.js');
 const { generateCrudMethods } = require('../services/index.js');
