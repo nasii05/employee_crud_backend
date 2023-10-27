@@ -3,9 +3,11 @@ const router = express.Router();
 const objectId = require('mongoose').Types.ObjectId;
 
 const Employee = require('../models/employee.model.js');
-const { generateCrudMetods } = require('../services/index.js');
+const { generateCrudMethods } = require('../services/index.js');
+const employeecrud = generateCrudMethods(Employee);
+
 router.get('/', (req, res) => {
-    Employee.find()
+    employeecrud.getAll()
         .then(data => res.send(data))
         .catch(err => console.log(err));
 });
@@ -16,7 +18,7 @@ router.get('/:id', (req, res) => {
             error: 'no recode with given _id' + req.params.id
         })
     else
-        Employee.findById(req.params.id)
+        employeecrud.getById(req.params.id)
             .then(data => {
                 if (data)
                     res.send(data)
@@ -28,9 +30,8 @@ router.get('/:id', (req, res) => {
             .catch(err => console.log(err));
 });
 
-
 router.post('/', (req, res) => {
-    Employee.create(req.body)
+    employeecrud.create(req.body)
         .then(data => res.status(201).json(data))
         .catch(err => console.log(err));
 });
