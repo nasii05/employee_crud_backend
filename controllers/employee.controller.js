@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const {validateDbId}  = require('../middlewares/index.js');
 
 const Employee = require('../models/employee.model.js');
 const { generateCrudMethods } = require('../services/index.js');
 const employeecrud = generateCrudMethods(Employee);
+const { validateDbId, raiseRecord404Error } = require('../middlewares/index.js');
+
 
 router.get('/test',
-    (req, res, next) => {next()},
-    (req, res) => {res.send('foo')}
+    (req, res, next) => { next({}) },
+    (req, res) => { res.send('foo') }
 )
 
 router.get('/', (req, res) => {
@@ -17,17 +18,15 @@ router.get('/', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/:id', validateDbId,  (req, res) => {
-        employeecrud.getById(req.params.id)
-            .then(data => {
-                if (data)
-                    res.send(data)
-                else
-                    res.status(404).json({
-                        error: 'no recode with given _id' + req.params.id
-                    })
-            })
-            .catch(err => console.log(err));
+router.get('/:id', validateDbId, (req, res) => {
+    employeecrud.getById(req.params.id)
+        .then(data => {
+            if (data)
+                res.send(data)
+            else
+              raiseRecord404Error(req, res)
+        })
+        .catch(err => console.log(err));
 });
 
 router.post('/', (req, res) => {
@@ -36,11 +35,11 @@ router.post('/', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.put('/:id', (req, res) => {
-    
+router.put('/:id', validateDbId, (req, res) => {
+
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateDbId,(req, res) => {
 
 })
 
